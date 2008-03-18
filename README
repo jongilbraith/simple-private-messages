@@ -1,0 +1,93 @@
+= Simple Private Messages
+
+This plugin provides basic private messaging functionality for members of a
+particular model. It's not big on features but the idea is that it's very
+simple and light on resources.
+
+It's not bound to specific model names and plays nice with will_paginate.
+
+= Setup
+
+First create the private message model by running the simple_private_messages
+generator, passing the name you want to use for the model.
+
+  ./script/generate simple_private_messages Message
+
+Now look in your new model and customise the is_private_message declaration's
+:class_name value to the name of your model which will have messages. If this
+class is User, this can be omitted as it is the default.
+
+Finally, add the following entry to the model which will have the messages
+
+  has_private_messages :class_name => Message
+
+If you have used "Message" then that is the default and it need not be
+specified.
+
+= Usage
+
+Examples assume you're using restful authentication or AAA, with a user model
+of User and message model of Message.
+
+== Creating / sending a message:
+
+  frank = User.find_by_login("frank")
+  george = User.find_by_login("george")
+
+  message = Message.new
+  message.subject = "Happy Festivus, son"
+  message.body = "It's time for the Feats of Strength."
+  message.sender = frank
+  message.recipient = george
+  message.save
+
+== Reading a message
+
+  message = Message.read(id, user)
+  
+Returns the message of the chosen id and ensures the passed user is either the
+sender or the recipient. If unread, it checks to see if the passed user is the
+recipient and if so marks the read_at timestamp.
+
+You can also check if a message has been read with the following:
+
+  message.read?
+
+== Retrieving a user's received mail
+
+  babu = User.find_by_login("babu")
+  babu.received_messages
+
+The following will return Babu's number of unread messages:
+
+  babu.unread_message_count
+  
+== Retrieving a user's sent mail
+
+  babu = User.find_by_login("babu")
+  babu.sent_messages
+  
+== Other finds
+
+  babu.sent_messages.find(:all, :conditions => "read_at ")
+
+== Deleting a message
+
+  babu = User.find_by_login("babu")
+  message = babu.received_messages.find(id)
+  message.mark_deleted
+  
+This will mark a message found in Babu's inbox deleted. It now won't appear
+in his received_messages, but will still appear in the sender's sent_messages.
+
+  uscis = User.find_by_login("uscis")
+  message = uscis.sent_messages.find(id)
+  message.mark_deleted
+
+Now that both sender and recipient have marked the message deleted, it now
+gets destroyed.
+
+== Credits & further info
+
+Jon Gilbraith, 18 March 2008
+www.professionalnerd.com / jon@professionalnerd.com
