@@ -24,6 +24,9 @@ Finally, add the following entry to the model which will have the messages
 If you have used "Message" then that is the default and it need not be
 specified.
 
+A unit test will be created in test/unit. This also contains two tests which
+ideally belong in the parent object's unit test and should be moved there.
+
 = Usage
 
 Examples assume you're using restful authentication or AAA, with a user model

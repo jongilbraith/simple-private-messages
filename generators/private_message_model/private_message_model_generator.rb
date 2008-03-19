@@ -15,6 +15,9 @@ class PrivateMessageModelGenerator < Rails::Generator::NamedBase
     record do |m|
       m.directory "app/models"
       m.template "model.rb", "app/models/#{singular_lower_case_name}.rb"
+
+      m.directory "test/unit"
+      m.template "unit_test.rb", "test/unit/#{singular_lower_case_name}_test.rb"
       
       m.migration_template "migration.rb", "db/migrate", :assigns => {
         :migration_name => "Create#{plural_camel_case_name}"
