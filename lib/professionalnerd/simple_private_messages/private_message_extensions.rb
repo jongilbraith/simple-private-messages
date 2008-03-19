@@ -1,15 +1,15 @@
-module Professionalnerd 
-  module SimplePrivateMessages
+module Professionalnerd # :nodoc:
+  module SimplePrivateMessages # :nodoc:
     module PrivateMessageExtensions
-      def self.included(base) 
+      def self.included(base) # :nodoc:
         base.extend ActMethods
       end 
 
       module ActMethods
-        # Sets up a model to be a private message model, defining the parent class as specified in :class_name.
-        # Methods provided:
-        # *  <tt>:sender</tt> - the sender of the message.
-        # *  <tt>:recipient</tt> - the recipient of the message.
+        # Sets up a model to be a private message model, defining the parent class as specified in :class_name (typically "User")
+        # Provides the following instance methods:
+        # *  <tt>sender</tt> - the sender of the message.
+        # *  <tt>recipient</tt> - the recipient of the message.
         def is_private_message(options = {})
           options[:class_name] ||= 'User'
           
@@ -28,9 +28,9 @@ module Professionalnerd
       end 
 
       module ClassMethods
-        # Ensures the passed object is either the sender or the recipient then returns the message.
+        # Ensures the passed user is either the sender or the recipient then returns the message.
         # If the reader is the recipient and the message has yet not been read, it marks the read_at timestamp.
-        def read(id, reader, options = {})
+        def read(id, reader)
           message = find(id, :conditions => ["sender_id = ? OR recipient_id = ?", reader, reader])
           if message.read_at.nil? && reader == message.recipient
             message.read_at = Time.now
@@ -41,16 +41,16 @@ module Professionalnerd
       end
 
       module InstanceMethods
-        # Returns a boolean value based on whether the recipient has read the message
+        # Returns true or false value based on whether the a message has been read by it's recipient.
         def read?
           self.read_at.nil? ? false : true
         end
 
-        # Marks the message as deleted by either the sender or the recipient, which ever the object that was passed is.
-        # Once both have marked it delete, it is destroyed.
-        def mark_deleted(object)
-          self.sender_deleted = true if self.sender == object
-          self.recipient_deleted = true if self.recipient == object
+        # Marks a message as deleted by either the sender or the recipient, which ever the user that was passed is.
+        # Once both have marked it deleted, it is destroyed.
+        def mark_deleted(user)
+          self.sender_deleted = true if self.sender == user
+          self.recipient_deleted = true if self.recipient == user
           self.sender_deleted && self.recipient_deleted ? self.destroy : save!
         end
       end 
