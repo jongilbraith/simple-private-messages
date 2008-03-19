@@ -14,6 +14,7 @@ module Professionalnerd
           options[:class_name] ||= 'Message'
           
           unless included_modules.include? InstanceMethods
+            class_inheritable_accessor :options
             has_many :sent_messages,
                      :class_name => options[:class_name],
                      :foreign_key => 'sender_id',
@@ -29,16 +30,23 @@ module Professionalnerd
             extend ClassMethods 
             include InstanceMethods 
           end 
+          self.options = options
         end 
       end 
 
       module ClassMethods
+        # None yet...
       end
 
       module InstanceMethods
+        # Returns true or false based on if this object has any unread messages
+        def unread_messages?
+          unread_message_count > 0 ? true : false
+        end
+        
         # Returns the number of unread messages for this object
         def unread_message_count
-          Message.count(:conditions => ["recipient_id = ? AND read_at IS NULL", self])
+          eval options[:class_name] + '.count(:conditions => ["recipient_id = ? AND read_at IS NULL", self])'
         end
       end 
     end
