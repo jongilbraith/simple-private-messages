@@ -8,12 +8,12 @@ It's not bound to specific model names and plays nice with will_paginate.
 
 = Setup
 
-First create the private message model by running the simple_private_messages
-generator, passing the name you want to use for the model.
+First create the private message model by running the private_message_model
+generator, passing the name you want to use for the message model.
 
-  ./script/generate simple_private_messages Message
+  ./script/generate private_message_model Message
 
-Now look in your new model and customise the is_private_message declaration's
+Now look in your new model and customise the "is_private_message" declaration's
 :class_name value to the name of your model which will have messages. If this
 class is User, this can be omitted as it is the default.
 
@@ -62,32 +62,69 @@ The following will return Babu's number of unread messages:
 
   babu.unread_message_count
   
+Or the following for true or false on whether there are unread messages:
+
+  babu.unread_messages?
+  
 == Retrieving a user's sent mail
 
   babu = User.find_by_login("babu")
   babu.sent_messages
   
-== Other finds
+== Custom finds
 
-  babu.sent_messages.find(:all, :conditions => "read_at ")
+  babu.sent_messages.find(:all,
+                          :conditions => ["read_at < ?", 2.days.ago],
+                          :limit => 20, :order => "created_at ASC")
 
 == Deleting a message
 
   babu = User.find_by_login("babu")
-  message = babu.received_messages.find(id)
-  message.mark_deleted
+  message = babu.received_messages.find(3)
+  message.mark_deleted(babu)
   
-This will mark a message found in Babu's inbox deleted. It now won't appear
-in his received_messages, but will still appear in the sender's sent_messages.
+This will look at a message and mark it read by the sender or recipient,
+based on whichever Babu is. It now won't appear in Babu's sent or received
+messages.
 
-  uscis = User.find_by_login("uscis")
-  message = uscis.sent_messages.find(id)
+  immigration = User.find_by_login("immigration")
+  message = immigration.sent_messages.find(3)
   message.mark_deleted
 
 Now that both sender and recipient have marked the message deleted, it now
-gets destroyed.
+gets destroyed. Should a message be sent to oneself, it will be deleted
+immediately when marked deleted, as the sender and recipient are both
+the same.
 
-== Credits & further info
+= Scaffold
 
-Jon Gilbraith, 18 March 2008
-www.professionalnerd.com / jon@professionalnerd.com
+A generator is included to create a basic controller and set of views. It
+works on the assumption that the parent model is a user and should work out
+of the box with Restful Authentication.
+
+Run the following generator passing the name of the model you just created
+and you'll get a basic controller and set of views. By convention, the
+controller will be given a name of the plural of that of the model.
+
+  ./script/generate private_message_scaffold Message
+
+After that you need to add the resource to your routes.rb as a nested resource
+of the users controller, with a collection for the delete_selected action.
+
+  map.resources :users do |users|
+    users.resources :messages, :collection => { :delete_selected => :post }
+  end
+
+Then uncomment the entry at the top of the message model to establish the
+:to accessor.
+
+You should now have working messaging.
+
+=== Bug reports / suggestions
+
+www.professionalnerd.com / "jonYADAYADAprofessionalnerd.com".gsub(/YADAYADA/, "@")
+
+=== License
+
+Copyright (c) 2007 Jon Gilbraith released under the MIT license
+http://en.wikipedia.org/wiki/MIT_License

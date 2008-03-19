@@ -1,11 +1,11 @@
 Description:
-    Creates the private message model and migration for use with 
-    the simple_private_messages plugin.
+    Creates a basic but working controller and set of views for private
+    messages.
 
-    Run the migration, passing the name of the model to be created.
+    Run the following generator, passing the name of the model you created.
 
 Example:
   
-    ./script/generate simple_private_messages Message
-    
-See the README for full details on setup.
+    ./script/generate private_message_scaffold Message
+
+Further steps are involved after this, see the README for full details.

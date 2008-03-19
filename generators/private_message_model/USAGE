@@ -6,6 +6,6 @@ Description:
 
 Example:
   
-    ./script/generate simple_private_messages Message
-    
-See the README for full details on setup.
+    ./script/generate private_message_model Message
+
+Further steps are involved after this, see the README for full details.
