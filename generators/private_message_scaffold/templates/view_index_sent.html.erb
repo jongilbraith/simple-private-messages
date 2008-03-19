@@ -16,8 +16,8 @@
 		<%% for <%= singular_lower_case_name %> in @<%= plural_lower_case_name %> %>
 			<tr>
 				<td><%%= check_box_tag "delete[]", <%= singular_lower_case_name %>.id %></td>
-				<td><%%= link_to h(<%= singular_lower_case_name %>.subject), user_<%= singular_lower_case_name %>_path(@user, <%= singular_lower_case_name %>) %></td>
-  			<td><%%= link_to h(<%= singular_lower_case_name %>.recipient.login), user_path(@user) %></td>
+				<td><%%= link_to h(<%= singular_lower_case_name %>.subject), user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %></td>
+  			<td><%%= link_to h(<%= singular_lower_case_name %>.recipient.login), user_path(@<%= singular_lower_case_parent %>) %></td>
 			  <td><%%=h <%= singular_lower_case_name %>.created_at.to_s(:long) %></td>
 			</tr>
 		<%% end %>
@@ -28,4 +28,4 @@
 		</tr>
  	<%% end %>
 </table>
-<%%= link_to "Inbox", user_<%= plural_lower_case_name %>_path(@user)%>
+<%%= link_to "Inbox", user_<%= plural_lower_case_name %>_path(@<%= singular_lower_case_parent %>)%>

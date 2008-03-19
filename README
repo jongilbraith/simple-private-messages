@@ -9,23 +9,19 @@ It's not bound to specific model names and plays nice with will_paginate.
 = Setup
 
 First create the private message model by running the private_message_model
-generator, passing the name you want to use for the message model.
+generator, passing two parameters - the name you want to use for the message
+model and the parent object that will have private messages.
 
-  ./script/generate private_message_model Message
+For all examples in the readme, we will use Message and User.
 
-Now look in your new model and customise the "is_private_message" declaration's
-:class_name value to the name of your model which will have messages. If this
-class is User, this can be omitted as it is the default.
+  ./script/generate private_message_model Message User
 
 Finally, add the following entry to the model which will have the messages
 
-  has_private_messages :class_name => Message
+  has_private_messages
 
-If you have used "Message" then that is the default and it need not be
-specified.
-
-A unit test will be created in test/unit. This also contains two tests which
-ideally belong in the parent object's unit test and should be moved there.
+If you have used anything other than "Message", you will have to pass the
+correct class name along as :class_name.
 
 = Usage
 
@@ -99,17 +95,21 @@ gets destroyed. Should a message be sent to oneself, it will be deleted
 immediately when marked deleted, as the sender and recipient are both
 the same.
 
+= Tests
+
+A unit test will be created in test/unit when you create the model. This also
+contains two tests which really to the parent object's so you might want to
+move them into the respective model's unit test. Don't forget about setup().
+
 = Scaffold
 
-A generator is included to create a basic controller and set of views. It
-works on the assumption that the parent model is a user and should work out
-of the box with Restful Authentication.
+A generator is included to create a basic controller and set of views.
 
-Run the following generator passing the name of the model you just created
-and you'll get a basic controller and set of views. By convention, the
-controller will be given a name of the plural of that of the model.
+Run the private_message_scaffold generator with the same options as before:
 
-  ./script/generate private_message_scaffold Message
+  ./script/generate private_message_scaffold Message User
+
+The controller will be named with the pluralised version of the model name.
 
 After that you need to add the resource to your routes.rb as a nested resource
 of the users controller, with a collection for the delete_selected action.

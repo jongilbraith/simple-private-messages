@@ -18,12 +18,12 @@
 				<td><%%= check_box_tag "delete[]", <%= singular_lower_case_name %>.id %></td>
 				<td>
 					<%% if <%= singular_lower_case_name %>.read? %>
-					  <%%= link_to h(<%= singular_lower_case_name %>.subject), user_<%= singular_lower_case_name %>_path(@user, <%= singular_lower_case_name %>) %>
+					  <%%= link_to h(<%= singular_lower_case_name %>.subject), user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %>
 					<%% else %>
-					  <%%= link_to "#{h(<%= singular_lower_case_name %>.subject)} (unread)", user_<%= singular_lower_case_name %>_path(@user, <%= singular_lower_case_name %>) %>
+					  <%%= link_to "#{h(<%= singular_lower_case_name %>.subject)} (unread)", user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %>
 					<%% end %>
 				</td>
-				<td><%%= link_to h(<%= singular_lower_case_name %>.sender.login), user_path(@user) %></td>
+				<td><%%= link_to h(<%= singular_lower_case_name %>.sender.login), user_path(@<%= singular_lower_case_parent %>) %></td>
 		    <td><%%=h <%= singular_lower_case_name %>.created_at.to_s(:long) %></td>
 			</tr>
 		<%% end %>
@@ -34,5 +34,5 @@
 		</tr>
 	<%% end %>
 </table>
-<%%= link_to "Sent", user_<%= plural_lower_case_name %>_path(@user, :mailbox => :sent)%> |
-<%%= link_to "Compose", new_user_<%= singular_lower_case_name %>_path(@user)%>
+<%%= link_to "Sent", user_<%= plural_lower_case_name %>_path(@<%= singular_lower_case_parent %>, :mailbox => :sent)%> |
+<%%= link_to "Compose", new_user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>)%>
