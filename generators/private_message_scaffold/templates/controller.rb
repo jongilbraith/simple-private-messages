@@ -55,6 +55,6 @@ class <%= plural_camel_case_name %>Controller < ApplicationController
   
   private
     def set_user
-      @<%= singular_lower_case_parent %> = current_user
+      @<%= singular_lower_case_parent %> = User.find(params[:<%= singular_lower_case_parent %>_id])
     end
 end
