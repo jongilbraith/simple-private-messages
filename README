@@ -97,9 +97,8 @@ the same.
 
 = Tests
 
-A unit test will be created in test/unit when you create the model. This also
-contains two tests which really to the parent object's so you might want to
-move them into the respective model's unit test. Don't forget about setup().
+Unit tests are provided for the model extensions but not for the generated
+scaffold. Running these requires sqlite3.
 
 = Scaffold
 
@@ -122,6 +121,11 @@ Then uncomment the entry at the top of the message model to establish the
 :to accessor.
 
 You should now have working messaging.
+
+=== Credits
+
+Testing functionality for creating dedicated models / loading of a custom
+schema taken from acts_as_taggable_on_steroids.
 
 === Bug reports / suggestions
 
