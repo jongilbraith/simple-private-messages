@@ -1,7 +1,7 @@
-module Professionalnerd # :nodoc:
-  module SimplePrivateMessages # :nodoc:
-    module HasPrivateMessagesExtensions # :nodoc:
-      def self.included(base) # :nodoc:
+module Professionalnerd #:nodoc:
+  module SimplePrivateMessages #:nodoc:
+    module HasPrivateMessagesExtensions #:nodoc:
+      def self.included(base) #:nodoc:
         base.extend ActMethods
       end 
 
@@ -34,7 +34,7 @@ module Professionalnerd # :nodoc:
         end 
       end 
 
-      module ClassMethods
+      module ClassMethods #:nodoc:
         # None yet...
       end
 
