@@ -15,17 +15,19 @@ module Professionalnerd #:nodoc:
           
           unless included_modules.include? InstanceMethods
             class_inheritable_accessor :options
+            table_name = options[:class_name].constantize.table_name
+            
             has_many :sent_messages,
                      :class_name => options[:class_name],
                      :foreign_key => 'sender_id',
-                     :order => "created_at DESC",
-                     :conditions => ["sender_deleted = ?", false]
+                     :order => "#{table_name}.created_at DESC",
+                     :conditions => ["#{table_name}.sender_deleted = ?", false]
 
             has_many :received_messages,
                      :class_name => options[:class_name],
                      :foreign_key => 'recipient_id',
-                     :order => "created_at DESC",
-                     :conditions => ["recipient_deleted = ?", false]
+                     :order => "#{table_name}.created_at DESC",
+                     :conditions => ["#{table_name}.recipient_deleted = ?", false]
 
             extend ClassMethods 
             include InstanceMethods 
