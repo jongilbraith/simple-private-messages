@@ -10,6 +10,8 @@ module Professionalnerd # :nodoc:
         # Provides the following instance methods:
         # *  <tt>sender</tt> - the sender of the message.
         # *  <tt>recipient</tt> - the recipient of the message.
+        #
+        # Also adds a named scopes of :read and :unread, to get, well, read and unread messages.
         def is_private_message(options = {})
           options[:class_name] ||= 'User'
           
@@ -24,6 +26,9 @@ module Professionalnerd # :nodoc:
             extend ClassMethods 
             include InstanceMethods 
           end 
+
+          named_scope :read, :conditions => "read_at IS NOT NULL"
+          named_scope :unread, :conditions => "read_at IS NULL"
         end 
       end 
 
