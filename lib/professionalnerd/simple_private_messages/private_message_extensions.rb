@@ -27,7 +27,7 @@ module Professionalnerd # :nodoc:
             include InstanceMethods 
           end 
 
-          named_scope :read, :conditions => "read_at IS NOT NULL"
+          named_scope :already_read, :conditions => "read_at IS NOT NULL"
           named_scope :unread, :conditions => "read_at IS NULL"
         end 
       end 
