@@ -1,5 +1,7 @@
 = Simple Private Messages
 
+_Now Rails 3 compatible!_
+
 This plugin provides basic private messaging functionality between the users
 of a site. It's not big on features but the idea is that it's nice and simple
 and light on resources.
@@ -8,13 +10,13 @@ It's not bound to specific model names and plays nice with will_paginate.
 
 = Setup
 
-First create the private message model by running the private_message_model
+First create the private message model by running the simple_private_messages:model
 generator, passing two parameters - the name you want to use for the Message
 model and the name of the User model.
 
 For all examples in the readme, we will use Message and User.
 
-  ./script/generate private_message_model Message User
+  rails generate simple_private_messages:model Message User
 
 Now add the following entry to the model which will have the messages
 
@@ -101,18 +103,11 @@ in one step due to the sender and recipient being the same.
 
 A generator is included to create a basic controller and set of views.
 
-Run the private_message_scaffold generator with the same options as before:
+Run the simple_private_messages:scaffold generator with the same options as before:
 
-  ./script/generate private_message_scaffold Message User
+  rails generate simple_private_messages:scaffold Message User
 
 The controller will be named with the pluralised version of the model name.
-
-After that you need to add the resource to your routes.rb as a nested resource
-of the users controller, with a collection for the delete_selected action.
-
-  map.resources :users do |users|
-    users.resources :messages, :collection => { :delete_selected => :post }
-  end
 
 Then uncomment the entry at the top of the message model to establish the
 :to accessor.
@@ -128,10 +123,6 @@ scaffold. Running these requires sqlite3.
 
 Testing functionality for creating dedicated models / loading of a custom
 schema taken from acts_as_taggable_on_steroids.
-
-=== Bug reports / suggestions
-
-www.professionalnerd.com / "jonYADAYADAprofessionalnerd.com".gsub(/YADAYADA/, "@")
 
 === License
 
