@@ -10,13 +10,12 @@ begin
     gem.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"]
     gem.email = "ferdinand.niedermann@gmail.com"
     gem.authors = ["Jon Gilbraith","Ferdinand Niedermann"]
-    # other fields that would normally go in your gemspec
-    # like authors, email and has_rdoc can also be included here
+    gem.homepage="http://github.com/nerdinand/simple-private-messages"
+    gem.description="Rails plugin that provides basic private messaging functionality between the users of a site."
   end
 rescue
   puts "Jeweler or one of its dependencies is not installed."
 end
-
 
 desc 'Default: run unit tests.'
 task :default => :test
