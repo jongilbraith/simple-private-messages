@@ -54,3 +54,9 @@ module Professionalnerd #:nodoc:
     end
   end
 end 
+
+if defined? ActiveRecord
+  ActiveRecord::Base.class_eval do
+    include Professionalnerd::SimplePrivateMessages::HasPrivateMessagesExtensions
+  end
+end
