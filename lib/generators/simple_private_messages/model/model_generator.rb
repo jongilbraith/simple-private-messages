@@ -39,10 +39,6 @@ class ModelGenerator < Rails::Generators::Base
 	    @singular_lower_case_parent = user_model_name.singularize.underscore
     	@plural_lower_case_parent = user_model_name.pluralize.underscore    
 		
-		route("resources :#{@plural_lower_case_parent} do 
-		    resources :#{@plural_lower_case_name}, :collection => { :delete_selected => :post }
-		end")
-		
 		#directory "app/models"
 		template "model.rb", "app/models/#{singular_lower_case_name}.rb"
 			
