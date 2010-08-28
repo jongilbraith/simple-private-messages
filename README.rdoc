@@ -124,6 +124,8 @@ scaffold. Running these requires sqlite3.
 Testing functionality for creating dedicated models / loading of a custom
 schema taken from acts_as_taggable_on_steroids.
 
+Thank you to nerdinand for the Rails 3 upgrade.
+
 === License
 
 Copyright (c) 2007 Jon Gilbraith released under the MIT license
