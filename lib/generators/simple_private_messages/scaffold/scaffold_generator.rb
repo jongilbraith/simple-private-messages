@@ -26,9 +26,13 @@ class ScaffoldGenerator < Rails::Generators::Base
     @singular_lower_case_parent = user_model_name.singularize.underscore
     @plural_lower_case_parent = user_model_name.pluralize.underscore    
   
-  		route("resources :#{@plural_lower_case_parent} do 
-		    resources :#{@plural_lower_case_name}, :collection => { :delete_selected => :post }
-		end")
+    route("resources :#{@plural_lower_case_parent} do
+             resources :#{@plural_lower_case_name} do
+               collection do
+                 post :delete_selected
+               end
+             end
+           end")
   
       #directory "app/controllers"
       template "controller.rb", "app/controllers/#{@plural_lower_case_name}_controller.rb"
