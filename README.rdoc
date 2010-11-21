@@ -18,7 +18,7 @@ model and the name of the User model.
 
 For all examples in the readme, we will use Message and User.
 
-  rails generate simple_private_messages:model Message User
+  rails generate simple_private_messages:model User Message
 
 Now add the following entry to the model which will have the messages
 
@@ -107,7 +107,7 @@ A generator is included to create a basic controller and set of views.
 
 Run the simple_private_messages:scaffold generator with the same options as before:
 
-  rails generate simple_private_messages:scaffold Message User
+  rails generate simple_private_messages:scaffold User Message
 
 The controller will be named with the pluralised version of the model name.
 
