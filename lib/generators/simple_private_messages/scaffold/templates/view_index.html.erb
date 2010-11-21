@@ -1,4 +1,4 @@
-<%% form_tag delete_selected_user_<%= plural_lower_case_name %>_path(@<%= singular_lower_case_parent %>) do %>
+<%% form_tag delete_selected_user_<%= plural_lower_case_name %>_path(@<%= singular_lower_case_parent %>, :method => :post) do %>
 	<%% if params[:mailbox] == "sent" %>
 			<%%= render :partial => "sent" %>
 	<%% else %>
