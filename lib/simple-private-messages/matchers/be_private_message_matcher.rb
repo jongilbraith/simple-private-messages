@@ -3,12 +3,11 @@ module Professionalnerd # :nodoc:
     module Shoulda # :nodoc:
       module Matchers # :nodoc:
 
-        def have_private_messages
-          HavePrivateMessagesMatcher.new
+        def be_private_message
+          BePrivateMessage.new
         end
 
-        class HavePrivateMessagesMatcher # :nodoc:
-
+        class BePrivateMessage
           def matches? subject
             @subject = subject
             @subject = @subject.class unless Class === @subject
@@ -16,23 +15,24 @@ module Professionalnerd # :nodoc:
           end
 
           def failure_message
-            "Should have 'has_private_messages' method"
+            "Should be private message"
           end
 
           def negative_failure_message
-            "Should not have 'has_private_messages' method"
+            "Should not be private message"
           end
 
           def description
-            "have private messages"
+            "is private message"
           end
 
           protected
 
           def included?
-            @subject.ancestors.include?(Professionalnerd::SimplePrivateMessages::HasPrivateMessagesExtensions::InstanceMethods)
+            @subject.ancestors.include?(Professionalnerd::SimplePrivateMessages::PrivateMessageExtensions::InstanceMethods)
           end
         end
+
       end
     end
   end

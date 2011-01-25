@@ -5,7 +5,7 @@ require 'private_message_extensions'
 
 
 module SimplePrivateMessages
-  	class Railtie < Rails::Railtie
+  class Railtie < Rails::Railtie
     	#railtie_name :simple_private_messages
-	end
+  end
 end
