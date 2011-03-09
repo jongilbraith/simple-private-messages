@@ -1,19 +1,57 @@
-<%% form_for @<%= singular_lower_case_name %>, :url => user_<%= plural_lower_case_name %>_path(@user) do |f| %>
+<%% content_for :simple_private_messages do %>
+  <%%= stylesheet_link_tag 'jquery/jquery.ui' %>
+  <%%= stylesheet_link_tag 'jquery/jquery.ui.Multiselect' %>
+  
+  <%%= javascript_include_tag 'jquery/jquery.min' %>
+  <%%= javascript_include_tag 'jquery/jquery.Localisation.min' %>
+  <%%= javascript_include_tag 'jquery/jquery-ui.min' %>
+  <%%= javascript_include_tag 'jquery/jquery.ui.Multiselect' %>
+  <%%= javascript_include_tag 'jquery/jquery.ScrollTo.min' %>
+  <%%= javascript_tag "
+  jQuery(document).ready(function($) {
+    $.localise('ui-multiselect', { language: '#{I18n.locale}', path: 'javascripts/jquery/locale/'}'}); 
+    $('.multiselect').multiselect({sortable: false});
+  });
+  " %>
+<%% end %>
+
+
+<%%= form_for @<%= singular_lower_case_name %>_content, :url => user_<%= plural_lower_case_name %>_path(@user) do |f| %>
   <p>
     To:<br />
 		<%%= f.text_field :to %>
-		<%%= error_message_on @<%= singular_lower_case_name %>, :to %>
+		<%%= error_message_on @<%= singular_lower_case_name %>_content, :to %>
   </p>
   <p>
     Subject:<br />
     <%%= f.text_field :subject %>
-    <%%= error_message_on @<%= singular_lower_case_name %>, :subject %>
+    <%%= error_message_on @<%= singular_lower_case_name %>_content, :subject %>
     </p>
     <p>
       Message<br />
       <%%= f.text_area :body %>
-			<%%= error_message_on @<%= singular_lower_case_name %>, :body %>
+			<%%= error_message_on @<%= singular_lower_case_name %>_content, :body %>
     </p>
+    
+    <p>
+    <%%= f.label :to %><br />
+    <%%= f.collection_select :to, 
+                User.all, 
+                :id, 
+                :full_name,
+                {:selected => @<%= singular_lower_case_name %>_content.to.map {|i| i.to_i}},
+                { 
+                :multiple => true,
+                :size => 10, 
+                :style => 'width: 920px;', 
+                :class => 'multiselect'
+                } %>
+    </p>  
+      
+    <p>
+      <%%= check_box('<%= singular_lower_case_name %>_content', :no_save, { :checked => @<%= singular_lower_case_name %>_content.no_save }, checked_value = 'true', unchecked_value = 'false') %> 
+      <%%= f.label :no_save, "Don't save in sent" %>
+    </p>   
     <p>
       <%%= submit_tag "Send" %>
     </p>

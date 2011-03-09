@@ -7,7 +7,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "simple-private-messages"
     gem.summary = "Simple private messages plugin for Rails 3"
-    gem.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*"]
+    gem.files = Dir["{lib}/**/*", "{javascripts}/**/*","{stylesheets}/**/*", "{test}/**/*"]
     gem.email = "ferdinand.niedermann@gmail.com"
     gem.authors = ["Jon Gilbraith","Ferdinand Niedermann"]
     gem.homepage="http://github.com/nerdinand/simple-private-messages"

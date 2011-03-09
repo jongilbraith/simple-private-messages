@@ -53,10 +53,20 @@ module Professionalnerd # :nodoc:
 
         # Marks a message as deleted by either the sender or the recipient, which ever the user that was passed is.
         # Once both have marked it deleted, it is destroyed.
-        def mark_deleted(user)
+        # Added method argument count used to check if the message_content has to be destroyed
+        def mark_deleted(user, count)
           self.sender_deleted = true if self.sender == user
           self.recipient_deleted = true if self.recipient == user
-          self.sender_deleted && self.recipient_deleted ? self.destroy : save!
+          # Removed
+          # self.sender_deleted && self.recipient_deleted ? self.destroy : save!
+          # Added the new logic
+          mc = self.message_content
+          if self.sender_deleted && self.recipient_deleted 
+            self.destroy
+            mc.destroy if count == 1
+          else
+             save!
+          end
         end
       end 
     end

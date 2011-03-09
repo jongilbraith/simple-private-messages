@@ -5,6 +5,8 @@ class MessageModelTest < Test::Unit::TestCase
   def setup
     @jerry = create_user(:login => "jerry")
     @george = create_user(:login => "george")
+    @mc1 = create_message_content(:subject => "To many", :body => "Many: Test content!")
+    @mc2 = create_message_content(:subject => "To one", :body => "One: Test content!")
     @message = create_message
   end
 
@@ -13,8 +15,7 @@ class MessageModelTest < Test::Unit::TestCase
     
     assert_equal @message.sender, @george
     assert_equal @message.recipient, @jerry
-    assert_equal @message.subject, "Frolf, Jerry!"
-    assert_equal @message.body, "Frolf, Jerry! Frisbee golf!"
+    assert_equal @message.message_content, @mc1
     assert @message.read_at.nil?
   end
 

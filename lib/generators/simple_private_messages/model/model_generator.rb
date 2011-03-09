@@ -40,11 +40,24 @@ class ModelGenerator < Rails::Generators::Base
     	@plural_lower_case_parent = user_model_name.pluralize.underscore    
 		
 		#directory "app/models"
-		template "model.rb", "app/models/#{singular_lower_case_name}.rb"
-			
-		migration_template "migration.rb", "db/migrate/create_#{plural_lower_case_name}", :assigns => {
-			:migration_name => "Create#{plural_camel_case_name}"
-		}
+		# Removed 
+		# template "model.rb", "app/models/#{singular_lower_case_name}.rb"
+		# Added two models
+		template "model_head.rb", "app/models/#{singular_lower_case_name}.rb"
+    template "model_ref.rb", "app/models/#{singular_lower_case_name}_content.rb"
+	  
+	  # Removed
+		# migration_template "migration.rb", "db/migrate/create_#{plural_lower_case_name}", :assigns => {
+		#	 :migration_name => "Create#{plural_camel_case_name}"
+		# }
+		
+		# Added two migrations (messages and message_contents)
+	  migration_template "migration_head.rb", "db/migrate/create_#{plural_lower_case_name}", :assigns => {
+      :migration_name => "Create#{plural_camel_case_name}"
+    }    
+    migration_template "migration_ref.rb", "db/migrate/create_#{singular_lower_case_name}_contents", :assigns => {
+      :migration_name => "Create#{singular_camel_case_name}Contents"
+    }
 	end
 end
 end

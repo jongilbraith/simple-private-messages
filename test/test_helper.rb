@@ -17,10 +17,12 @@ class Test::Unit::TestCase
   end
 
   def create_message(options = {})
+    mc = MessageContent.create({:subject => "Frolf, Jerry!",
+                                :body => "Frolf, Jerry! Frisbee golf!"}.merge(options))
+                                
     return Message.create({:sender => @george,
                            :recipient => @jerry,
-                           :subject => "Frolf, Jerry!",
-                           :body => "Frolf, Jerry! Frisbee golf!"}.merge(options))
+                           :message_content_id => mc}.merge(options))
   end
   
 end

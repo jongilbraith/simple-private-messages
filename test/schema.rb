@@ -1,12 +1,17 @@
 ActiveRecord::Schema.define(:version => 2) do
 
+  create_table "message_contents", :force => true do |t|
+    t.string   "subject"
+    t.text     "body"
+    t.timestamps
+  end
+
   create_table "messages", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "recipient_id"
     t.boolean  "sender_deleted",    :default => false
     t.boolean  "recipient_deleted", :default => false
-    t.string   "subject"
-    t.text     "body"
+    t.references "message_content"
     t.datetime "read_at"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,8 +1,6 @@
-= Simple Private Messages
+= Simple Private Messages + jQuery + jQuery-UI
 
-Now Rails 3 compatible!
-
-For Rails 2.3.x users there is an appropriately named branch that can be used.
+For Rails 3!
 
 This plugin provides basic private messaging functionality between the users
 of a site. It's not big on features but the idea is that it's nice and simple
@@ -10,7 +8,36 @@ and light on resources.
 
 It's not bound to specific model names and plays nice with will_paginate.
 
-= Setup
+== Requirements
+
+* Rails 3.x
+
+Required only if ui.multiselect is used to select multiple recipients (in the view) in a comfortable way. The plugin also works without jQuery and ui.multiselect.
+
+* jQuery >= 1.4.x     (Included in the plugin)
+* jQuery-UI >= 1.8.x  (Included in the plugin)
+
+== Install
+
+Use the rake tasks to install all required javascripts and stylesheets or do the installation manually.
+
+=== With rake tasks
+
+This rake task install all js and css files to public/javascripts/jquery and public/stylesheets/jquery.
+
+  rake simple_private_messages:install    # Copy javascripts, stylesheets and images to public
+
+=== Manual installation
+
+Copy all jQuery javascript files from vendor/plugins/simple-private-messages/javascripts to:
+
+  public/javascripts/jquery
+  
+Copy all CSS stylesheets and images files from vendor/plugins/simple-private-messages/stylesheets to:
+
+  public/stylesheets/jquery
+
+== Setup
 
 First create the private message model by running the simple_private_messages:model
 generator, passing two parameters - the name you want to use for the Message
@@ -20,6 +47,10 @@ For all examples in the readme, we will use Message and User.
 
   rails generate simple_private_messages:model User Message
 
+Now you can run the scaffold generator that generates a complete view and a controller
+
+  rails generate simple_private_messages:scaffold User Message
+
 Now add the following entry to the model which will have the messages
 
   has_private_messages
@@ -27,26 +58,39 @@ Now add the following entry to the model which will have the messages
 If you have used anything other than "Message", you will have to pass the
 correct class name along as :class_name.
 
+Add the following line on top (Between <head> ... </head> tag) of your app/view/layout/application.html.erb file:
+
+  <%= yield :simple_private_messages %>
+
 That's it.
 
-= Usage
+=== Rake Tasks
+
+  rake simple_private_messages:install    # Copy javascripts, stylesheets and images to public
+  rake simple_private_messages:uninstall  # Remove javascripts, stylesheets and images from public
+
+== Usage
 
 Examples assume you're using Restful Authentication or AAA, with a user model
 of User and message model of Message.
 
-== Creating / sending a message:
+=== Creating / sending a message:
 
   frank = User.find_by_login("frank")
   george = User.find_by_login("george")
 
+  mc = MessageContent.new
+  mc.subject = "Happy Festivus, son"
+  mc.body = "It's time for the Feats of Strength."
+  mc.save
+    
   message = Message.new
-  message.subject = "Happy Festivus, son"
-  message.body = "It's time for the Feats of Strength."
   message.sender = frank
   message.recipient = george
+  message.message_content = mc
   message.save
 
-== Reading a message
+=== Reading a message
 
   message = Message.read(id, user)
   
@@ -58,7 +102,7 @@ You can also check if a message has been read with the following:
 
   message.read?
 
-== Retrieving a user's received mail
+=== Retrieving a user's received mail
 
   newman = User.find_by_login("newman")
   newman.received_messages
@@ -71,19 +115,19 @@ Or the following for true or false on whether there are unread messages:
 
   newman.unread_messages?
   
-== Retrieving a user's sent mail
+=== Retrieving a user's sent mail
 
   newman = User.find_by_login("newman")
   newman.sent_messages
   
-== Custom finds
+=== Custom finds
 
   newman.sent_messages.find(:all,
                           :conditions => ["read_at < ?", 2.days.ago],
                           :limit => 20,
                           :order => "created_at ASC")
 
-== Deleting a message
+=== Deleting a message
 
   newman = User.find_by_login("newman")
   message = newman.received_messages.find(3)
@@ -101,7 +145,7 @@ Now that both sender and recipient have marked the message deleted, it
 gets destroyed. Should a message be sent to oneself, it will be deleted
 in one step due to the sender and recipient being the same.
 
-= Scaffold
+== Scaffold
 
 A generator is included to create a basic controller and set of views.
 
@@ -116,7 +160,7 @@ Then uncomment the entry at the top of the message model to establish the
 
 You should now have working messaging.
 
-= Tests
+== Tests
 
 Unit tests are provided for the model extensions but not for the generated
 scaffold. Running these requires sqlite3.
