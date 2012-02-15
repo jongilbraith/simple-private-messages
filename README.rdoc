@@ -116,6 +116,23 @@ Then uncomment the entry at the top of the message model to establish the
 
 You should now have working messaging.
 
+= RSpec
+In spec/spec_helper.rb add
+  
+  require 'simple-private-messages/matchers'
+
+and 
+
+  config.include Professionalnerd::SimplePrivateMessages::Shoulda::Matchers 
+
+In user model spec file:
+
+  it { should have_private_messages }
+
+and message model spec file:
+  
+  it { should be_private_message }
+
 = Tests
 
 Unit tests are provided for the model extensions but not for the generated
