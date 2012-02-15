@@ -14,7 +14,7 @@ module Professionalnerd #:nodoc:
           options[:class_name] ||= 'Message'
           
           unless included_modules.include? InstanceMethods
-            class_inheritable_accessor :options
+            class_attribute :options
             table_name = options[:class_name].constantize.table_name
             
             has_many :sent_messages,
