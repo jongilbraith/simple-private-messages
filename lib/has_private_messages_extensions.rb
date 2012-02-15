@@ -14,7 +14,7 @@ module Professionalnerd #:nodoc:
           options[:class_name] ||= 'Message'
           
           unless included_modules.include? InstanceMethods
-            class_inheritable_accessor :options
+            class_attribute :options
             table_name = options[:class_name].constantize.table_name
             
             has_many :sent_messages,
@@ -48,7 +48,7 @@ module Professionalnerd #:nodoc:
         
         # Returns the number of unread messages for this user
         def unread_message_count
-          eval options[:class_name] + '.count(:conditions => ["recipient_id = ? AND read_at IS NULL", self])'
+          eval options[:class_name] + '.count(:conditions => ["recipient_id = ? AND read_at IS NULL and recipient_deleted = ?", self, false])'
         end
       end 
     end

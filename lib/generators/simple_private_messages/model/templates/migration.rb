@@ -11,6 +11,6 @@ class <%= "Create#{plural_camel_case_name}" %> < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table <%= plural_lower_case_name %>
+    drop_table :<%= plural_lower_case_name %>
   end
 end
