@@ -17,7 +17,7 @@
 			<tr>
 				<td><%%= check_box_tag "delete[]", <%= singular_lower_case_name %>.id %></td>
 				<td>
-					<%% if <%= singular_lower_case_name %>.read? %>
+					<%% if <%= singular_lower_case_name %>.message_read? %>
 					  <%%= link_to h(<%= singular_lower_case_name %>.subject), user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %>
 					<%% else %>
 					  <%%= link_to "#{h(<%= singular_lower_case_name %>.subject)} (unread)", user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %>

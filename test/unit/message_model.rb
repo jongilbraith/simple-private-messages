@@ -19,7 +19,7 @@ class MessageModelTest < Test::Unit::TestCase
   end
 
   def test_read_returns_message
-    assert_equal @message, Message.read(@message, @george)
+    assert_equal @message, Message.read_message(@message, @george)
   end
 
   def test_read_records_timestamp
@@ -27,9 +27,9 @@ class MessageModelTest < Test::Unit::TestCase
   end
   
   def test_read?
-    Message.read(@message, @jerry)
+    Message.read_message(@message, @jerry)
     @message.reload
-    assert @message.read?
+    assert @message.message_read?
   end
   
   def test_mark_deleted_sender

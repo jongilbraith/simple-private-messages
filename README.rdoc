@@ -48,7 +48,7 @@ of User and message model of Message.
 
 == Reading a message
 
-  message = Message.read(id, user)
+  message = Message.read_message(id, user)
   
 Returns the message of the chosen id and ensures the passed user is either the
 sender or the recipient. If unread, it checks to see if the passed user is the
@@ -56,7 +56,7 @@ recipient and if so marks the read_at timestamp.
 
 You can also check if a message has been read with the following:
 
-  message.read?
+  message.message_read?
 
 == Retrieving a user's received mail
 

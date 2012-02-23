@@ -11,7 +11,7 @@ class <%= plural_camel_case_name %>Controller < ApplicationController
   end
   
   def show
-    @<%= singular_lower_case_name %> = <%= singular_camel_case_name %>.read(params[:id], current_user)
+    @<%= singular_lower_case_name %> = <%= singular_camel_case_name %>.read_message(params[:id], current_user)
   end
   
   def new
