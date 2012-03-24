@@ -23,7 +23,7 @@
 					  <%%= link_to "#{h(<%= singular_lower_case_name %>.subject)} (unread)", user_<%= singular_lower_case_name %>_path(@<%= singular_lower_case_parent %>, <%= singular_lower_case_name %>) %>
 					<%% end %>
 				</td>
-				<td><%%= link_to h(<%= singular_lower_case_name %>.sender.login), user_path(@<%= singular_lower_case_parent %>) %></td>
+				<td><%%= link_to h(<%= singular_lower_case_name %>.sender.login), user_path(<%= singular_lower_case_name %>.sender) %></td>
 		    <td><%%=h <%= singular_lower_case_name %>.created_at.to_s(:long) %></td>
 			</tr>
 		<%% end %>
