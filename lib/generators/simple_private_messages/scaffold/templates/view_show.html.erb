@@ -1,6 +1,6 @@
-<p><strong>From:</strong> <%%= @<%= singular_lower_case_name %>.sender == @user ? link_to("You", user_path(@user)) : link_to(h(@<%= singular_lower_case_name %>.sender.login), user_path(@user)) %></p>
+<p><strong>From:</strong> <%%= @<%= singular_lower_case_name %>.sender == @user ? link_to("You", user_path(@user)) : link_to(h(@<%= singular_lower_case_name %>.sender.login), user_path(@<%= singular_lower_case_name%>.sender)) %></p>
 <p><strong>Received:</strong> <%%= @<%= singular_lower_case_name %>.created_at.to_s(:long) %></p>
-<p><strong>To:</strong> <%%= @<%= singular_lower_case_name %>.recipient == @user ? link_to("You", user_path(@user)) : link_to(h(@<%= singular_lower_case_name %>.recipient.login), user_path(@user)) %></p>
+<p><strong>To:</strong> <%%= @<%= singular_lower_case_name %>.recipient == @user ? link_to("You", user_path(@user)) : link_to(h(@<%= singular_lower_case_name %>.recipient.login), user_path(@<%= singular_lower_case_name %>.recipient)) %></p>
 <p>
   <strong>Message</strong><br />
   <%%=h @<%= singular_lower_case_name %>.body %>
