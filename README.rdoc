@@ -14,7 +14,7 @@ It's not bound to specific model names and plays nice with will_paginate.
 
 Since there is no .gemspec for this, you must specify '0.0.0' as version in your Gemfile to make it install properly: 
 
-    gem 'simple-private-messages', '0.0.0', :git => 'git://github.com/professionalnerd/simple-private-messages.git'
+    gem 'simple-private-messages', '0.0.0', :git => 'git://github.com/jongilbraith/simple-private-messages.git'
 
 Then run 
     
