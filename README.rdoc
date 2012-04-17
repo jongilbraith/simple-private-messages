@@ -12,6 +12,14 @@ It's not bound to specific model names and plays nice with will_paginate.
 
 = Setup
 
+Since there is no .gemspec for this, you must specify '0.0.0' as version in your Gemfile to make it install properly: 
+
+    gem 'simple-private-messages', '0.0.0', :git => 'git://github.com/professionalnerd/simple-private-messages.git'
+
+Then run 
+    
+    bundle install
+
 First create the private message model by running the simple_private_messages:model
 generator, passing two parameters - the name you want to use for the Message
 model and the name of the User model.
