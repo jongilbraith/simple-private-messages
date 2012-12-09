@@ -12,7 +12,7 @@ module Professionalnerd #:nodoc:
         # *  <tt>received_messages</tt> - returns a collection of messages for which this object is the recipient.
         def has_private_messages(options = {})
           options[:class_name] ||= 'Message'
-          
+
           unless included_modules.include? InstanceMethods
             class_attribute :options
             table_name = options[:class_name].constantize.table_name
@@ -20,12 +20,14 @@ module Professionalnerd #:nodoc:
             has_many :sent_messages,
                      :class_name => options[:class_name],
                      :foreign_key => 'sender_id',
+                     :include => :recipient,
                      :order => "#{table_name}.created_at DESC",
                      :conditions => ["#{table_name}.sender_deleted = ?", false]
 
             has_many :received_messages,
                      :class_name => options[:class_name],
                      :foreign_key => 'recipient_id',
+                     :include => :sender,
                      :order => "#{table_name}.created_at DESC",
                      :conditions => ["#{table_name}.recipient_deleted = ?", false]
 
