@@ -1,4 +1,4 @@
-<%% form_for @<%= singular_lower_case_name %>, :url => user_<%= plural_lower_case_name %>_path(@user) do |f| %>
+<%%= form_for @<%= singular_lower_case_name %>, :url => user_<%= plural_lower_case_name %>_path(@user) do |f| %>
   <p>
     To:<br />
 		<%%= f.text_field :to %>
